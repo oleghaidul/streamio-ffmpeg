@@ -11,6 +11,9 @@ module FFMPEG
     # @!attribute [r] audio_streams
     #   @return [Array<FFMPEG::AudioStreams>] Array of audio streams parsed
     attr_reader :audio_streams
+    # @!attribute [r] subtitles
+    #   @return [Array<FFMPEG::Subtitles>] Array of subtitles
+    attr_reader :subtitles
     attr_reader :container
 
     def initialize(path)
@@ -45,6 +48,10 @@ module FFMPEG
         @audio_streams = metadata[:streams]
                           .select { |stream| stream.key?(:codec_type) and stream[:codec_type] === 'audio' }
                           .map { |as_hash| FFMPEG::AudioStream.new(as_hash) }
+
+        @subtitles = metadata[:streams]
+                          .select { |stream| stream.key?(:codec_type) and stream[:codec_type] === 'subtitle' }
+                          .map { |as_hash| FFMPEG::Subtitle.new(as_hash) }
 
         @container = metadata[:format][:format_name]
 

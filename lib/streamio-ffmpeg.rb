@@ -11,6 +11,7 @@ require 'ffmpeg/transcoder'
 require 'ffmpeg/encoding_options'
 require 'ffmpeg/audio_stream'
 require 'ffmpeg/video_stream'
+require 'ffmpeg/subtitle'
 
 module FFMPEG
   # FFMPEG logs information about its progress when it's transcoding.
